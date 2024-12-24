@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新年までのカウントダウン</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+        background-color: #f0f8ff;
+      }
+      .countdown {
+        font-size: 3em;
+        font-weight: bold;
+        color: #ff6347;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .time {
+        font-size: 2em;
+        color: #2e8b57;
+      }
+      .container {
+        display: inline-block;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>2025年1月1日0時までのカウントダウン</h1>
+    <div class="countdown">
+      <div class="container">
+        <p id="days" class="time">00</p>
+        <p>日</p>
+      </div>
+      <div class="container">
+        <p id="hours" class="time">00</p>
+        <p>時間</p>
+      </div>
+      <div class="container">
+        <p id="minutes" class="time">00</p>
+        <p>分</p>
+      </div>
+      <div class="container">
+        <p id="seconds" class="time">00</p>
+        <p>秒</p>
+      </div>
+    </div>
+
+    <script>
+      // 目標時刻（新年 2025年1月1日0時）
+      const targetDate = new Date('January 1, 2025 00:00:00').getTime();
+
+      // カウントダウンの更新関数
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const timeLeft = targetDate - now;
+
+        // 時間、分、秒を計算
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // HTMLに表示
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours;
+        document.getElementById('minutes').innerText = minutes;
+        document.getElementById('seconds').innerText = seconds;
+
+        // カウントダウンが終了したら表示を更新
+        if (timeLeft < 0) {
+          clearInterval(interval);
+          document.querySelector('.countdown').innerHTML = '<h2>新年おめでとうございます！</h2>';
+        }
+      }
+
+      // 1秒ごとにカウントダウンを更新
+      const interval = setInterval(updateCountdown, 1000);
+
+      // 初期表示を更新
+      updateCountdown();
+    </script>
+  </body>
+</html>
